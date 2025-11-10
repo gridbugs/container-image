@@ -32,7 +32,7 @@ jobs:
 
       - run: OUT_NAME=container-image-${{ github.ref_name }}-${{ matrix.name }} >> $GITHUB_ENV
       - name: Release a tarball of build outputs
-      - run:
+        run:
           mkdir -p "$OUT_NAME"
           cp -rlf _build/install/default/* "$OUT_NAME"
           tar czf "$OUT_NAME.tar.gz" "$OUT_NAME"
