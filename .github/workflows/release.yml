@@ -28,4 +28,17 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build the project
-        run: DUNE_CONFIG__PKG_BUILD_PROGRESS=enabled dune build
+        run: DUNE_CONFIG__PKG_BUILD_PROGRESS=enabled dune build @install --release --only-packages container-image
+
+      - run: OUT_NAME=container-image-${{ github.ref_name }}-${{ matrix.name }} >> $GITHUB_ENV
+      - name: Release a tarball of build outputs
+      - run:
+          mkdir -p "$OUT_NAME"
+          cp -rlf _build/install/default/* "$OUT_NAME"
+          tar czf "$OUT_NAME.tar.gz" "$OUT_NAME"
+
+      - run: Upload assets
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifacts: "*.tar.gz"
