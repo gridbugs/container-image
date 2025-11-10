@@ -22,8 +22,8 @@ jobs:
 
       - name: Install Dune
       - run: |
-        echo $HOME/.local/bin >> $GITHUB_PATH
-        curl -fsSL https://github.com/ocaml-dune/dune-bin-install/releases/download/v3/install.sh | sh -s 3.20.2 --install-root $HOME/.local --no-update-shell-config
+          echo $HOME/.local/bin >> $GITHUB_PATH
+          curl -fsSL https://github.com/ocaml-dune/dune-bin-install/releases/download/v3/install.sh | sh -s 3.20.2 --install-root $HOME/.local --no-update-shell-config
 
       - uses: actions/checkout@v4
 
