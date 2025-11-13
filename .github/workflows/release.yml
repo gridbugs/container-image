@@ -20,12 +20,9 @@ jobs:
             name: x86_64-linux-gnu
     steps:
 
-      - name: Install Dune
-        run: |
-          echo $HOME/.local/bin >> $GITHUB_PATH
-          curl -fsSL https://github.com/ocaml-dune/dune-bin-install/releases/download/v3/install.sh | sh -s 3.20.2 --install-root $HOME/.local --no-update-shell-config
-
       - uses: actions/checkout@v4
+
+      - uses: nmittu/setup-dune@v2
 
       - name: Build the project
         run: DUNE_CONFIG__PKG_BUILD_PROGRESS=enabled dune build @install --release --only-packages container-image
