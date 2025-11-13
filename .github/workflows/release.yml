@@ -22,7 +22,7 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - uses: nmittu/setup-dune@v2
+      - uses: ocaml-dune/setup-dune@v0
 
       - name: Build the project
         run: DUNE_CONFIG__PKG_BUILD_PROGRESS=enabled dune build @install --release --only-packages container-image
