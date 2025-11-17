@@ -28,10 +28,8 @@ jobs:
         id: package-cache
         uses: actions/cache@v4
         with:
-          path: |
-            _build/_private/default/.pkg/
-            ~/.cache/dune/toolchains
-          key: ${{ matrix.name }}-package-${{ hashFiles('dune.lock') }}
+          path: ~/.cache/dune/toolchains
+          key: ${{ matrix.name }}-toolchains-${{ hashFiles('dune.lock') }}
 
       - name: Build the project
         run: DUNE_CONFIG__PKG_BUILD_PROGRESS=enabled DUNE_CACHE=disabled dune build @install --release --only-packages container-image
