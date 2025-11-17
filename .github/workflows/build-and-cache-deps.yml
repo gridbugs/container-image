@@ -1,4 +1,10 @@
-name: build-and-cache-deps
+# The actions/cache github action allows builds of tags to use artifacts cached
+# by builds of the default branch, but doesn't allow builds of tags to use
+# artifacts cached by other tags. Thus to make the dependencies of the project
+# available to the "release" workflow, they are built and cached by this
+# workflow.
+
+name: Build and Cache Dependencies
 
 on:
   push:
@@ -7,7 +13,7 @@ on:
 
 jobs:
   release-unix:
-    name: Release for ${{ matrix.name }}
+    name: Build and cache dependencies for ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -34,4 +40,4 @@ jobs:
           key: ${{ matrix.name }}-artifacts-${{ hashFiles('dune.lock') }}
 
       - name: Build the project
-        run: dune build @install --release --only-packages container-image --verbose
+        run: dune build @install --release --only-packages container-image

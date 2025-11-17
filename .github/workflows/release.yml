@@ -24,9 +24,9 @@ jobs:
 
       - uses: ocaml-dune/setup-dune@v0
 
-      - name: Cache build artifacts
+      - name: Load dependencies from the cache
         id: artifact-cache
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: |
             _build
@@ -34,7 +34,7 @@ jobs:
           key: ${{ matrix.name }}-artifacts-${{ hashFiles('dune.lock') }}
 
       - name: Build the project
-        run: dune build @install --release --only-packages container-image --verbose
+        run: dune build @install --release --only-packages container-image
 
       - run: echo OUT_NAME=container-image-${{ github.ref_name }}-${{ matrix.name }} >> $GITHUB_ENV
 
