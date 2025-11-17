@@ -196,7 +196,7 @@ let show_cmd =
   Cmd.v (Cmd.info "show" ~version) Term.(const show $ setup $ image_id)
 
 let cmd =
-  Cmd.group ~default:list_term (Cmd.info "image")
+  Cmd.group ~default:list_term (Cmd.info "imagex")
     [ fetch_cmd; list_cmd; checkout_cmd; show_cmd ]
 
 let () =
