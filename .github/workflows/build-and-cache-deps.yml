@@ -1,0 +1,37 @@
+name: release
+
+on:
+  push:
+    branches:
+    - 'main'
+
+jobs:
+  release-unix:
+    name: Release for ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: macos-15-intel
+            name: x86_64-macos
+          - os: macos-15
+            name: aarch64-macos
+          - os: ubuntu-latest
+            name: x86_64-linux-gnu
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: ocaml-dune/setup-dune@v0
+
+      - name: Cache package build artifacts
+        id: package-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            _build/_private/default/.pkg/
+            ~/.cache/dune/toolchains
+          key: ${{ matrix.name }}-package-${{ hashFiles('dune.lock') }}
+
+      - name: Build the project
+        run: DUNE_CONFIG__PKG_BUILD_PROGRESS=enabled dune build @install --release --only-packages container-image
