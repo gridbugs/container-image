@@ -28,7 +28,9 @@ jobs:
         id: package-cache
         uses: actions/cache@v4
         with:
-          path: ~/.cache/dune/toolchains
+          path: |
+            _build/_private/default/.pkg/
+            ~/.cache/dune/toolchains
           key: ${{ matrix.name }}-toolchains-${{ hashFiles('dune.lock') }}
 
       - name: Build the project
