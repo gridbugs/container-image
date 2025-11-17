@@ -24,6 +24,15 @@ jobs:
 
       - uses: ocaml-dune/setup-dune@v0
 
+      - name: Cache package build artifacts
+        id: package-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            _build/_private/default/.pkg/
+            ~/.cache/dune/toolchains
+          key: ${{ matrix.name }}-package-${{ hashFiles('dune.lock') }}
+
       - name: Build the project
         run: DUNE_CONFIG__PKG_BUILD_PROGRESS=enabled dune build @install --release --only-packages container-image
 
