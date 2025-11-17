@@ -44,8 +44,6 @@ jobs:
           cp -rlf _build/install/default/* "$OUT_NAME"
           tar czf "$OUT_NAME.tar.gz" "$OUT_NAME"
 
-      - name: Upload assets
-        uses: ncipollo/release-action@v1
+      - uses: actions/upload-artifact@v4
         with:
-          allowUpdates: true
-          artifacts: "*.tar.gz"
+          path: "*.tar.gz"
