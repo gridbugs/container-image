@@ -34,7 +34,7 @@ jobs:
           key: ${{ matrix.name }}-package-${{ hashFiles('dune.lock') }}
 
       - name: Build the project
-        run: DUNE_CONFIG__PKG_BUILD_PROGRESS=enabled dune build @install --release --only-packages container-image
+        run: DUNE_CONFIG__PKG_BUILD_PROGRESS=enabled DUNE_CACHE=disabled dune build @install --release --only-packages container-image
 
       - run: echo OUT_NAME=container-image-${{ github.ref_name }}-${{ matrix.name }} >> $GITHUB_ENV
 
