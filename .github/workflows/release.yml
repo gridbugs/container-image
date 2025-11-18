@@ -35,14 +35,14 @@ jobs:
             ~/.cache/dune
           key: ${{ matrix.name }}-artifacts-${{ hashFiles('dune.lock') }}
 
-      - name: Build the project
-        run: dune build @install --release --only-packages container-image
-
       - name: Patch bin/dune to statically link executable
         if: matrix.name == 'x86_64-linux-statically-linked'
         run: |
           awk '{ print } /\(executable/ { print " (link_flags (:standard -cclib -static))" }' bin/dune > bin/dune.static
           mv bin/dune.static bin/dune
+
+      - name: Build the project
+        run: dune build @install --release --only-packages container-image
 
       - run: echo OUT_NAME=container-image-${{ github.ref_name }}-${{ matrix.name }} >> $GITHUB_ENV
 
