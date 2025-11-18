@@ -14,4 +14,6 @@
   dune-build-info
   fmt.cli
   logs.fmt
-  fmt.tty))
+  fmt.tty)
+ (link_flags
+  (:standard -cclib -static)))
