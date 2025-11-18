@@ -33,7 +33,7 @@ jobs:
           path: |
             _build
             ~/.cache/dune
-          key: ${{ matrix.name }}-artifacts-${{ hashFiles('dune.lock') }}
+          key: ${{ matrix.os }}-artifacts-${{ hashFiles('dune.lock') }}
 
       - name: Patch bin/dune to statically link executable
         if: matrix.name == 'x86_64-linux-statically-linked'

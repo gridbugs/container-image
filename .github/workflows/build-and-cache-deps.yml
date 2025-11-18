@@ -13,17 +13,14 @@ on:
 
 jobs:
   release-unix:
-    name: Build and cache deps for ${{ matrix.name }}
+    name: Build and cache deps for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         include:
           - os: macos-15-intel
-            name: x86_64-macos
           - os: macos-15
-            name: aarch64-macos
           - os: ubuntu-latest
-            name: x86_64-linux-gnu
     steps:
 
       - uses: actions/checkout@v4
@@ -37,7 +34,7 @@ jobs:
           path: |
             _build
             ~/.cache/dune
-          key: ${{ matrix.name }}-artifacts-${{ hashFiles('dune.lock') }}
+          key: ${{ matrix.os }}-artifacts-${{ hashFiles('dune.lock') }}
 
       - name: Build the project
         run: dune build @install --release --only-packages container-image
